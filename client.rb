@@ -131,12 +131,9 @@ class ::Chef
   class Node
     class VividMash
 
-      #class variable to store cache of seen ones
-
       assign_method = instance_method(:[]=)
       define_method :[]= do |key, value|
 
-        #if key == root["attribute_to_debug"]
         if key == $attribute_to_debug
             #additionally store where it was set from
             assign_method.bind(self).call(:attribute_debug_location, caller[0])
@@ -147,4 +144,3 @@ class ::Chef
     end
   end
 end
-#delete any pre existing reports
