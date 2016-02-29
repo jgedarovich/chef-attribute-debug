@@ -28,7 +28,7 @@ a knife plugin, chef handler, etc.
 
 #How to use it
 * add the contents of client.rb in this repository to the top of a hosts
-[client.rb](client.rb). 
+[client.rb](https://raw.githubusercontent.com/jgedarovich/chef-attribute-debug/master/client.rb). 
 * edit the 'attribut to debug' line at the top to reflect the attribute you 
 want to determine the source of. 
 * run chef on the host
