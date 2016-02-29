@@ -14,7 +14,7 @@ describe "A default attribute located in role" do
 
   describe command ('cd /tmp/kitchen && knife node show 4-default-in-role-ubuntu-1204 -a attribute_debug_location') do
      its(:exit_status) { should eq 0 }
-     its(:stdout) { should eq "4-default-in-role-ubuntu-1204:\n  attribute_debug_location: 4-default-in-role\n"}
+     its(:stdout) { should eq "4-default-in-role-ubuntu-1204:\n  attribute_debug_location: 4-default-in-role default in role\n"}
      its(:stderr) { should eq '' }
   end
 end
