@@ -23,11 +23,17 @@ a knife plugin, chef handler, etc.
 
 #how to use it
 * add the contents of client.rb in this repository to the top of a hosts
-client.rb. 
-* edit the 'attribut to debug' line to reflect the attribute you want
-to determine the source of. 
+[client.rb](client.rb). 
+* edit the 'attribut to debug' line at the top to reflect the attribute you 
+want to determine the source of. 
 * run chef on the host
-* use knife to show the value of attribute\_debug_\_value
+```
+sudo chef-client --once
+```
+* use knife to show the value of attribute\_debug\_location
+```
+knife node show HOSTNAME_HERE -a attribute_debug_location
+```
 
 #running tests
 requirements: docker, kitchen, maybe some kitchen docker plugin, ii forget

@@ -1,6 +1,6 @@
-
-$attribute_to_debug = env["attribute_to_debug"]
+#TODO: edit the below line to reflect the attribute name you want to check
 $attribute_to_debug = "check_me"
+
 require 'chef/dsl/include_attribute'
 
 require 'chef/node/attribute'
@@ -38,22 +38,13 @@ class ::Chef
         @method_backups.each do |method_name, method_backup|
           define_method method_name do |opts|
             opts = checkForAttributeToDebug(opts)
-            puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-            puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-            puts "                    #{method_name}"
-            puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-            puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
             method_backup.bind(self).call(opts)
           end
         end
 
         #if the key we are trying to debug exists in the opts, add the debug value
         def checkForAttributeToDebug(opts)
-          puts "CHECKING"
           if opts.include?($attribute_to_debug)
-            puts "FOUND IT"
-            puts opts.inspect
-            puts caller.inspect
             if opts.include?(:attribute_debug_location)
               opts[:attribute_debug_location]=opts[:attribute_debug_location]
             else
@@ -96,42 +87,12 @@ class ::Chef
 
         #if the key we are trying to debug exists in the opts, add the debug value
         def checkForAttributeToDebug(opts)
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "                    b4"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts opts
-          puts opts.default_attributes
-          puts opts.override_attributes
-          puts opts.inspect
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
           if opts.default_attributes.include?($attribute_to_debug)
-            #puts "FONUD IT DOODER"
-            #puts caller[1]
             opts.default_attributes[:attribute_debug_location]=opts.name
           end
           if opts.override_attributes.include?($attribute_to_debug)
-            #puts "FONUD IT DOODER"
-            #puts caller[1]
             opts.override_attributes[:attribute_debug_location]=opts.name
           end
-
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "                    after"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts opts
-          puts opts.default_attributes
-          puts opts.override_attributes
-          puts opts.inspect
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-          puts "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-
           return opts
         end
 
@@ -148,11 +109,6 @@ class ::Chef
       backup_default_attributes = instance_method(:default_attributes)
       define_method :default_attributes do |arg=nil|
         if !$attribute_to_debug.nil? && !arg.nil? && arg.include?($attribute_to_debug)
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "                    applyin dem expansion attribs"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
           arg['attribute_debug_location']="assigned from '#{@name}' environment - at default level"
         end
         backup_default_attributes.bind(self).call(arg)
@@ -161,11 +117,6 @@ class ::Chef
       backup_override_attributes = instance_method(:override_attributes)
       define_method :override_attributes do |arg=nil|
         if !$attribute_to_debug.nil? && !arg.nil? && arg.include?($attribute_to_debug)
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "                    applyin dem expansion attribs"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          puts "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
           arg['attribute_debug_location']="assigned from '#{@name}' environment - at override level"
         end
         backup_override_attributes.bind(self).call(arg)
@@ -185,17 +136,8 @@ class ::Chef
       assign_method = instance_method(:[]=)
       define_method :[]= do |key, value|
 
-        puts '-------------------------------------------------------------'
-        puts "key: #{key}"
-        puts "value: #{value}"
-        puts "comparing #{key} with #{$attribute_to_debug}"
-        puts $attribute_to_debug
-          
         #if key == root["attribute_to_debug"]
         if key == $attribute_to_debug
-            puts "FOUND THE ATTRIBUTE TO DEBUG: #{key}"
-            puts "WITH VALUE: #{value}"
-            puts "FROM: #{caller[0]}"
             #additionally store where it was set from
             assign_method.bind(self).call(:attribute_debug_location, caller[0])
         end
