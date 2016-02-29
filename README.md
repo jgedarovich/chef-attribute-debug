@@ -16,10 +16,12 @@ question's client.rb file one can find the source of where an attribute is
 being set.
 
 #What it is
-a series of monkey patches __for omnibus chef version 11,16.0__ that get applied 
+a series of monkey patches __for omnibus chef version 11.16.0__ that get applied 
 at the client.rb level that can  determine from where an attribute is being 
 set. By monkey patchincg all of the points in chef code that injest attributes
  and piggy backing on the existing attribute precedence system.
+
+ Basically it checks for the 
 
 #What it isn't
 a knife plugin, chef handler, etc.
