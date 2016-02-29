@@ -20,3 +20,7 @@ cookbook_file "/tmp/kitchen/.chef/stickywicket.pem" do
   mode '0777'
   action :create
 end
+
+gem_package "chef-zero" do
+  action :install
+end

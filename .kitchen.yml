@@ -30,7 +30,7 @@ end
 ---
 driver:
   name: docker
-  provision_command: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -v 11.16.0 
+  provision_command: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -v 11.18.12
 
 
 provisioner:

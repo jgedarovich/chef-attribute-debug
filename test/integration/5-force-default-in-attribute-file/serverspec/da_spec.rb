@@ -3,7 +3,7 @@ require 'serverspec'
 describe "A force_default attribute located in a cookbook attribute file" do
 
   #all things run as root, starting from /home/kitchen, reset in each describe..
-  describe command('/opt/chef/bin/chef-zero &') do
+  describe command('/opt/chef/embedded/bin/chef-zero &') do
      its(:exit_status) { should eq 0 }
   end
  
