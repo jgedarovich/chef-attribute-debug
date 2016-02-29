@@ -1,0 +1,12 @@
+{
+  "name": "default",
+  "description": "",
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+      "check_me": "from_environment_default",
+      "wtf": "i don't know"
+  },
+  "override_attributes": {
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "override",
+  "description": "",
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+  },
+  "override_attributes": {
+      "check_me": "12 override from environment"
+  }
+}

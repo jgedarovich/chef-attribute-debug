@@ -1,0 +1,16 @@
+{
+  "name": "4-default-in-role",
+  "description": "",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+      "check_me": "4 default attribute from role"
+  },
+  "override_attributes": {
+  },
+  "chef_type": "role",
+  "run_list": [
+
+  ],
+  "env_run_lists": {
+  }
+}

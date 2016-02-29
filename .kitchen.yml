@@ -1,0 +1,249 @@
+<% 
+#fuck you stupid yaml config file, go die in a fire.
+# and seriously wtf, there is no option for specifying a pre-existing client.rb file?
+# CMON
+
+#well, this might assume that this is being run in the host machine : /, we'll see
+$client_rb_contents_hack_hack_hack = File.read("client.rb")
+
+require "kitchen/provisioner/chef_base"
+require "kitchen/provisioner/chef_zero"
+
+module Kitchen
+    module Provisioner
+        class ChefZero < ChefBase
+            class_eval do
+                
+                backup_prepare_client_rb = instance_method(:prepare_client_rb)
+
+                define_method :prepare_client_rb do
+                    backup_prepare_client_rb.bind(self).call()
+                    File.open(File.join(sandbox_path, "client.rb"), "a") do |file|
+                        file.puts $client_rb_contents_hack_hack_hack 
+                    end
+                end
+            end
+        end
+    end
+end
+%>
+---
+driver:
+  name: docker
+  provision_command: curl -L https://www.getchef.com/chef/install.sh | sudo bash -s -- -v 11.16.0 
+
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: false
+  chef_client_path: /usr/bin/chef-client
+  nodes_path: ./nodes
+  roles_path: ./roles
+  environments_path: ./environments
+
+platforms:
+  - name: ubuntu-12.04
+    driver_config: 
+        privileged: true
+        use_sudo: false
+        binary: /usr/bin/docker
+
+suites:
+  - name: 1-default-in-attribute-file
+    run_list:
+        - recipe[test-prereqs]
+        - recipe[1-default-in-attribute-file]
+        - recipe[debug-location::default]
+    attributes:
+  - name: 2-default-in-recipe
+    run_list:
+        - recipe[test-prereqs]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+  - name: 3-environment-default
+    run_list:
+        - recipe[test-prereqs]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 4-default-in-role
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 5-force-default-in-attribute-file
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 6-force-default-in-recipe
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+
+        environment: default
+  - name: 7-normal-in-attribute-file
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 8-normal-in-recipe
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 9-override-in-attribute-file
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 10-override-in-recipe
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[10-override-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 11-override-in-role
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - role[11-override-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[10-override-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: default
+  - name: 12-ovverride-in-environment
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - role[11-override-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[10-override-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: override
+  - name: 13-force-override-in-attribute-file
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - role[11-override-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[13-force-override-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[10-override-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: override
+  - name: 14-force-override-in-recipe
+    run_list:
+        - recipe[test-prereqs]
+        - role[4-default-in-role]
+        - role[11-override-in-role]
+        - recipe[5-force-default-in-attribute-file]
+        - recipe[13-force-override-in-attribute-file]
+        - recipe[9-override-in-attribute-file]
+        - recipe[7-normal-in-attribute-file]
+        - recipe[6-force-default-in-recipe]
+        - recipe[1-default-in-attribute-file]
+        - recipe[2-default-in-recipe]
+        - recipe[8-normal-in-recipe]
+        - recipe[10-override-in-recipe]
+        - recipe[14-force-override-in-recipe]
+        - recipe[debug-location::default]
+    attributes:
+    provisioner:
+      client_rb:
+        environment: override
