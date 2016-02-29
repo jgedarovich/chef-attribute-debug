@@ -4,7 +4,9 @@ A tool to discover where a chef attribute is being set from.
 At some point or another when working with chef you'll end up in a situation
 where it's necessary to unravel how or why a particular attribute is set on a
 node a certain way. At which point you'll find yourself on a journey through
-comparingt he 15 levels of chef attributes and a nodes runlist - a painful
+comparingt he [15 levels of chef
+attributes](https://docs.chef.io/_images/overview_chef_attributes_table.png) 
+and a nodes runlist - a painful
 waste of time.  debug\_value can help by telling you roughly at what level 
 it's being set at, but it's usefulness stops there.
 
@@ -36,7 +38,7 @@ knife node show HOSTNAME_HERE -a attribute_debug_location
 ```
 
 #Running tests
-requirements: docker, kitchen, maybe some kitchen docker plugin, ii forget
+requirements: docker, kitchen, maybe some kitchen docker plugin
 
 ```
 kitchen test
