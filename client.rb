@@ -88,10 +88,10 @@ class ::Chef
         #if the key we are trying to debug exists in the opts, add the debug value
         def checkForAttributeToDebug(opts)
           if opts.default_attributes.include?($attribute_to_debug)
-            opts.default_attributes[:attribute_debug_location]= opts.name + " default in role"
+            opts.default_attributes[:attribute_debug_location]= opts.name + " - default in role"
           end
           if opts.override_attributes.include?($attribute_to_debug)
-            opts.override_attributes[:attribute_debug_location]= opts.name + " override in role"
+            opts.override_attributes[:attribute_debug_location]= opts.name + " - override in role"
           end
           return opts
         end

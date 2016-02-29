@@ -14,7 +14,7 @@ describe "An override attribute located in a role" do
 
   describe command ('cd /tmp/kitchen && knife node show 11-override-in-role-ubuntu-1204 -a attribute_debug_location') do
      its(:exit_status) { should eq 0 }
-     its(:stdout) { should eq "11-override-in-role-ubuntu-1204:\n  attribute_debug_location: 11-override-in-role override in role\n" }
+     its(:stdout) { should eq "11-override-in-role-ubuntu-1204:\n  attribute_debug_location: 11-override-in-role - override in role\n" }
      its(:stderr) { should eq '' }
   end
 end
