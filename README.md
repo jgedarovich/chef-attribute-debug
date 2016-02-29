@@ -5,17 +5,18 @@ At some point or another when working with chef you'll end up in a situation
 where it's necessary to unravel how or why a particular attribute is set on a
 node a certain way. At which point you'll find yourself on a journey through
 comparingt he [15 levels of chef
-attributes](https://docs.chef.io/_images/overview_chef_attributes_table.png) 
+attributes](https://docs.chef.io/attributes.html#attribute-precedence) 
 and a nodes runlist - a painful
-waste of time.  debug\_value can help by telling you roughly at what level 
+waste of time.
+[debug_value](http://jtimberman.housepub.org/blog/2014/09/02/chef-node-dot-debug-value/) can help by telling you roughly at what level 
 it's being set at, but it's usefulness stops there.
 
-Enter the chef attribute-debugger. By simply instrumenting an example host in 
+Enter the chef-attribute-debugger. By simply instrumenting an example host in 
 question's client.rb file one can find the source of where an attribute is
 being set.
 
 #What it is
-a series of monkey patches for omnibus chef version 11,16.0 that get applied 
+a series of monkey patches __for omnibus chef version 11,16.0__ that get applied 
 at the client.rb level that can  determine from where an attribute is being 
 set. By monkey patchincg all of the points in chef code that injest attributes
  and piggy backing on the existing attribute precedence system.
