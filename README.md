@@ -1,6 +1,6 @@
 A tool to discover where a chef attribute is being set from.
 
-#description
+#Description
 At some point or another when working with chef you'll end up in a situation
 where it's necessary to unravel how or why a particular attribute is set on a
 node a certain way. At which point you'll find yourself on a journey through
@@ -18,10 +18,10 @@ at the client.rb level that can  determine from where an attribute is being
 set. By monkey patchincg all of the points in chef code that injest attributes
  and piggy backing on the existing attribute precedence system.
 
-#what it isn't
+#What it isn't
 a knife plugin, chef handler, etc.
 
-#how to use it
+#How to use it
 * add the contents of client.rb in this repository to the top of a hosts
 [client.rb](client.rb). 
 * edit the 'attribut to debug' line at the top to reflect the attribute you 
@@ -35,7 +35,7 @@ sudo chef-client --once
 knife node show HOSTNAME_HERE -a attribute_debug_location
 ```
 
-#running tests
+#Running tests
 requirements: docker, kitchen, maybe some kitchen docker plugin, ii forget
 
 ```
@@ -44,7 +44,7 @@ kitchen test
 the tests are setup like an onion, where each consecutive test case sets the
 test attribute at the next highest level of precedence.
 
-#test status
+#Test status
 
 ```
 Instance                                         Last Action
