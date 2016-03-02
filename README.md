@@ -12,7 +12,7 @@ waste of time.
 it's being set at, but it's usefulness stops there.
 
 Enter the chef-attribute-debugger. By simply instrumenting an example host in 
-question's client.rb file one can find the source of where an attribute is
+question's client.rb file, one can find the source of where an attribute is
 being set.
 
 #What it is
