@@ -21,7 +21,13 @@ at the client.rb level that can  determine from where an attribute is being
 set. By monkey patchincg all of the points in chef code that injest attributes
  and piggy backing on the existing attribute precedence system.
 
- Basically it checks for the 
+ methods involving the setting of attributes are wrapped using class\_eval to
+ intercept the attribute and check if it's the one we're looking for. If it
+ finds the one we're looking for it sets a new attribute
+ 'attribute\_debug\_location' to the value of where it was being set from to
+ the best of it's knowledge. Since the setting of the new attribuete happens
+ at the same precedence level it's safe to do this over and over again. This
+ way the location will match up with the one that it actually evaluated to.
 
 #What it isn't
 a knife plugin, chef handler, etc.
