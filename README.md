@@ -75,3 +75,9 @@ Instance                                         Last Action
 14-force-override-in-recipe-ubuntu-1204          Verified
 
 ```
+each test case number corresponds to a precedence level as [described
+here](https://docs.chef.io/attributes.html#attribute-precedence).
+
+#TODO
+Currently not checking for level 15 - "An automatic attribute identified by Ohai at the
+start of the chef-client run"
