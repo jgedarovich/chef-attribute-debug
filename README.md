@@ -4,7 +4,7 @@ A tool to discover where a chef attribute is being set from.
 At some point or another when working with chef you'll end up in a situation
 where it's necessary to unravel how or why a particular attribute is set on a
 node a certain way. At which point you'll find yourself on a journey through
-comparingt he [15 levels of chef
+comparing the [15 levels of chef
 attributes](https://docs.chef.io/attributes.html#attribute-precedence) 
 and a nodes runlist - a painful
 waste of time.
@@ -18,7 +18,7 @@ being set.
 #What it is
 A series of monkey patches __for omnibus chef version 11.18.12__ that get applied 
 at the client.rb level that can  determine from where an attribute is being 
-set. By monkey patchincg all of the points in chef code that injest attributes
+set. By monkey patchincg all of the points in chef code that ingest attributes
  and piggy backing on the existing attribute precedence system.
 
  Methods involving the setting of attributes are wrapped using class\_eval to
