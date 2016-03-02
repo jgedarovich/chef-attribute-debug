@@ -16,12 +16,12 @@ question's client.rb file one can find the source of where an attribute is
 being set.
 
 #What it is
-a series of monkey patches __for omnibus chef version 11.18.12__ that get applied 
+A series of monkey patches __for omnibus chef version 11.18.12__ that get applied 
 at the client.rb level that can  determine from where an attribute is being 
 set. By monkey patchincg all of the points in chef code that injest attributes
  and piggy backing on the existing attribute precedence system.
 
- methods involving the setting of attributes are wrapped using class\_eval to
+ Methods involving the setting of attributes are wrapped using class\_eval to
  intercept the attribute and check if it's the one we're looking for. If it
  finds the one we're looking for it sets a new attribute
  'attribute\_debug\_location' to the value of where it was being set from to
