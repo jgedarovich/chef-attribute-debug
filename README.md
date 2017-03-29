@@ -1,6 +1,6 @@
 A tool to discover where a chef attribute is being set from.
 
-#Description
+# Description
 At some point or another when working with chef you'll end up in a situation
 where it's necessary to unravel how or why a particular attribute is set on a
 node a certain way. At which point you'll find yourself on a journey through
@@ -15,7 +15,7 @@ Enter the chef-attribute-debugger. By simply instrumenting an example host in
 question's client.rb file, one can find the source of where an attribute is
 being set.
 
-#What it is
+# What it is
 A series of monkey patches __for omnibus chef version 11.18.12__ that get applied 
 at the client.rb level that can  determine from where an attribute is being 
 set. By monkey patchincg all of the points in chef code that ingest attributes
@@ -29,10 +29,10 @@ set. By monkey patchincg all of the points in chef code that ingest attributes
  at the same precedence level it's safe to do this over and over again. This
  way the location will match up with the one that it actually evaluated to.
 
-#What it isn't
+# What it isn't
 a knife plugin, chef handler, etc.
 
-#How to use it
+# How to use it
 * add the contents of client.rb in this repository to the top of a hosts
 [client.rb](https://raw.githubusercontent.com/jgedarovich/chef-attribute-debug/master/client.rb). 
 * edit the 'attribut to debug' line at the top to reflect the attribute you 
@@ -46,7 +46,7 @@ sudo chef-client --once
 knife node show HOSTNAME_HERE -a attribute_debug_location
 ```
 
-#Running tests
+# Running tests
 requirements: docker, kitchen, maybe some kitchen docker plugin
 
 ```
@@ -55,7 +55,7 @@ kitchen test
 the tests are setup like an onion, where each consecutive test case sets the
 test attribute at the next highest level of precedence.
 
-#Test status
+# Test status
 
 ```
 Instance                                         Last Action
@@ -78,7 +78,7 @@ Instance                                         Last Action
 each test case number corresponds to a precedence level as [described
 here](https://docs.chef.io/attributes.html#attribute-precedence).
 
-#TODO
+# TODO
 * Currently not checking for level 15 - "An automatic attribute identified by Ohai at the
 start of the chef-client run"
 * other versions of chef ie 12.
